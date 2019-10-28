@@ -20,7 +20,11 @@
 
 %math
 \usepackage{amsmath}
-\usepackage{nicefrac}
+
+%symbols
+\usepackage{gensymb}
+\usepackage{upgreek}
+
 
 %algorithm
 \usepackage[algoruled]{algorithm2e}
@@ -33,6 +37,14 @@
 \captionsetup{font={color=blue,scriptsize}}
 \captionsetup{labelformat=empty,labelsep=none}
 \captionsetup{justification=centering}
+
+%For urls
+\usepackage{hyperref}
+
+%For tables
+\usepackage{booktabs}
+\usepackage{diagbox}
+
 
 
 % Define some common variables
@@ -294,7 +306,7 @@
 
 \begin{frame}{Expected behavior}
 	\begin{itemize}
-		\item $\nicefrac{\ellapproxa \theta^{2}}{\ellapproxc\theta} \propto\nicefrac{\theta}{\scriptsize{N.A.}}$
+		\item $\frac{\ellapproxa \theta^{2}}{\ellapproxc\theta} \propto\frac{\theta}{\scriptsize{N.A.}}$
 		\item RQW limit\footnotemark : $\thetaellc < \frac{1}{2N\,\scriptsize{N.A.}}$ $|$ $\thetaella < \frac{1}{\sqrt{3N}}$
 		\begin{center}
 			\begin{figure}
@@ -328,35 +340,10 @@
 			\item "Slice" the object into multiple thin sections\footnotemark.
 			\item Agrees with rigorous coupled wave theory\footnotemark.
 		\end{itemize}
-		\begin{columns}[onlytextwidth,T]
-		\column{\dimexpr\linewidth-20mm-10mm}
-		\scalebox{0.65}{
-			\begin{algorithm}[H] 
-				% This is to hide end and get the last vertical line straight
-				\SetAlgoLined\DontPrintSemicolon
-				
-				\SetKwFunction{SliceDiff}{SliceDiff}
-				\SetKwFunction{PropShort}{PropShort}
-				\SetKwFunction{PropLong}{PropLong}
-				
-				\tcc{initialize}
-				$\psi(x,y) \xleftarrow{} 1$\;
-				\tcc{diffraction within optic}
-				\For{n=1,N}{ 	
-					\SliceDiff{n}\;
-					\PropShort{$\pixeldepth$}\;
-				}
-				\tcc{Propagate exit wave by a focal length $f$ to the focal plane}
-				\PropLong{$f$} \;
-				\caption{Optic simulation using the multislice method.}
-			\end{algorithm}
-		}
-		\column{30mm}
-			\begin{figure}
-				\hspace*{-2.1cm}\includegraphics[width=60mm]{ms}
-				\caption{Multi-slice schematic \footnotemark }
-			\end{figure}
-		\end{columns}
+		\begin{figure}
+			\includegraphics[scale=0.25]{ms}
+			\caption{Multi-slice schematic \footnotemark }
+		\end{figure}
 	
 		\addtocounter{footnote}{-2}
 			\footnotetext{\cite{cowley_actacryst_1957}, \cite{ishizuka_aca_1977}, also known as beam prop. meth. \cite{vanroey_josa_1981}}
@@ -368,181 +355,10 @@
 \end{frame}
 
 \begin{frame}
-	\scalebox{0.7}{
-		\begin{algorithm}[H]
-			%This is to hide Begin keyword
-			\SetKwProg{myproc}{Procedure}{}{}
-			\myproc{\SliceDiff{n}}{
-				\tcc{Apply refractive effect of slice using }	
-				$\psi(x,y) = \psi(x,y) \odot \exp\Bigl[i\, \frac{2\pi \pixeldepth}{\lambda} \bigl(\delta(x,y)+i\beta(x,y)\bigr)\Bigr]$ \;
-				\KwRet\;}
-			
-			\SetKwProg{myproc}{Procedure}{}{}
-			\myproc{\PropShort{$\pixeldepth$}}{
-				\tcc{Free space propagation from source $s$ to destination $d$ plane}	
-				$\psi_{s}(x,y) \xrightarrow{\mathcal{F}}\Psi(u,v)$\;
-				$\Psi(u,v) = \Psi(u,v) \odot \exp\Bigl[-i\, \frac{2\pi \pixeldepth}{\lambda} \sqrt{1-\lambda^{2}(u^{2}+v^{2})}\Bigr]$\;
-				$\Psi(u,v) \xrightarrow{\mathcal{F}^{-1}}\psi_d(x,y)$\;
-				\KwRet\;}
-			
-			\SetKwProg{myproc}{Procedure}{}{}
-			\myproc{\PropLong{$f$}}{
-				\tcc{Free space propagation from source $s$ to destination $d$ plane}	
-				$\psi^{\prime}(x,y) = \psi_{s}(x,y) \odot \exp\Bigl[-i\,\frac{2\pi f}{\lambda}  \sqrt{x_{s}^{2}+x_{s}^{2}+f^{2}}\Bigr]$\;
-				$\psi^{\prime}(x,y) \xrightarrow{\mathcal{F}} \Psi^{\prime}(x,y)$\;
-				$\Psi_{d}(x,y) = \Psi^{\prime}(x,y) \odot \exp\Bigl[-i\,\frac{2\pi f}{\lambda} \sqrt{x_{d}^{2}+x_{d}^{2}+f^{2}}\Bigr]$\;
-				$\psi_{d}(x,y) = \frac{i\pixelsize^2}{\lambda f} \Psi_{d}(x,y)$\;
-				\KwRet\;}
-			%				\caption{Optic simulation using the multislice method.}
-		\end{algorithm}
-	}
-	
-\end{frame}
-
-\subsection{Simulating tilt misalignment}
-\begin{frame}{Approaches to simulating tilt misalignment}
-	\begin{block}{}
-		\begin{columns}[onlytextwidth,T]
-			\column{\dimexpr\linewidth-30mm-10mm}
-			\begin{itemize}
-				\item Two methods to simulating tilt.
-				\begin{itemize}
-					\item Optic aligned.
-					\item Wavefiled aligned.
-				\end{itemize}
-			\item Optic aligned $\rightarrow$ simple, but limited to cases where output grid can capture focus.	
-			\item Wavefiled aligned $\rightarrow $ time consuming but no limit on tilt angle.
-			\end{itemize}
-			\column{30mm}
-			\begin{figure}
-				\vspace*{-1cm}\hspace*{-1.25cm}\includegraphics[width=50mm]{tilted_zp_grids}
-				\caption{Tilt schematic}
-			\end{figure}
-		\end{columns}
-	\end{block}
-\end{frame}
-
-
-\begin{frame}{Optic aligned approach}
-
-
-\end{frame}
-
-\begin{frame}{Optic aligned approach}
-		\scalebox{0.65}{
-			\begin{algorithm}[H] 				
-				\SetAlgoLined\DontPrintSemicolon \SetKwFunction{AddPhase}{AddPhase}
-				
-				\SetKwFunction{SliceDiff}{SliceDiff}
-				\SetKwFunction{PropShort}{PropShort}
-				\SetKwFunction{PropLong}{PropLong}
-				
-				
-				\tcc{initialize} \AddPhase{$\theta$}\;
-				\tcc{diffraction within optic}
-				\For{n=1,N}{
-					\SliceDiff{n}\;
-					\PropShort{$\pixeldepth$}\;
-				}
-				\tcc{Propagate exit wave by a focal length $f$ to the focal plane}
-				\PropLong{$f$} \;
-				
-				\SetKwProg{myproc}{Procedure}{}{}
-				\myproc{\AddPhase{$\theta$}}{
-					\tcc{Apply phase to mimic tilt misalignment}	
-					$\psi(x,y) \xleftarrow{} 1$ \;
-					$\pixelphase = \frac{2\pi \pixeldepth}{\lambda}\, \tan(\theta) x$ \;
-					$\psi(x,y) = \psi(x,y) \odot \exp[i \pixelphase]$ \;
-					\KwRet\;}
-				\caption{Algorithm for the optic-aligned approach.}
-			\end{algorithm}
-		}
-\end{frame}
-
-\section{Results}
-\begin{frame}{soft x-ray}
-	\begin{itemize}
-		\item Coma predicted.
-		\begin{center}
-			\begin{figure}
-				\includegraphics[scale=0.275]{foc_spot_half}
-				\caption{Partial fil}	
-			\end{figure}
-		\end{center}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{hard x-ray}
-	\begin{itemize}
-		\item Astigmatism predicted.
-		\begin{center}
-			\begin{figure}
-				\includegraphics[scale=0.275]{foc_spot_ten}
-				\caption{Partial fil}	
-			\end{figure}
-		\end{center}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{soft x-ray}
-	\begin{itemize}
-		\item Limit agrees with analytic expectation.
-		\begin{center}
-			\begin{figure}
-				\includegraphics[scale=0.275]{tilt_plot_half}
-				\caption{Partial fil}	
-			\end{figure}
-		\end{center}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{hard x-ray}
-	\begin{itemize}
-		\item Limit agrees with analytic expectation.
-		\begin{center}
-			\begin{figure}
-				\includegraphics[scale=0.275]{tilt_plot_ten}
-				\caption{Partial fil}	
-			\end{figure}
-		\end{center}
-	\end{itemize}
-\end{frame}
-
-
-
-%\begin{comment}
-% Placing a * after \section means it will not show in the
-% outline or table of contents.
-
-\begin{frame}{Acknowledgements}
-  \begin{itemize}
-  \item \alert{Kenan Li} SLAC
-  \item \alert{Michael Wojcik} APS,ANL.
-  \item \alert{NIMH} U01 MH109100
-  \end{itemize}
-\end{frame}
-
-
-%\end{comment}
-
-% All of the following is optional and typically not needed. 
-%\appendix
-\renewcommand*{\bibfont}{\scriptsize}
-\begin{frame}[t, allowframebreaks]
-\frametitle{References}
-\bibliographystyle{dinat-etal}
-\bibliography{xsd_coffee_talk}
-\end{frame}
-
-
-\section{Backup}
-
-
-\begin{frame}
 	\begin{block}{}
 		\begin{columns}[totalwidth=1.1\textwidth,c]
 			\column{.6\textwidth}
-			\scalebox{0.7}{
+			\scalebox{0.6}{
 				\begin{algorithm}[H] 
 					% This is to hide end and get the last vertical line straight
 					\SetAlgoLined\DontPrintSemicolon
@@ -595,6 +411,285 @@
 			}
 		\end{columns}
 	\end{block}
+\end{frame}
+
+
+\subsection{Simulating tilt misalignment}
+\begin{frame}{Approaches to simulating tilt misalignment}
+	\begin{block}{}
+		\begin{columns}[onlytextwidth,T]
+			\column{\dimexpr\linewidth-30mm-10mm}
+			\begin{itemize}
+				\item Two methods to simulating tilt.
+				\begin{itemize}
+					\item Optic aligned.
+					\item Wavefiled aligned.
+				\end{itemize}
+			\item Optic aligned $\rightarrow$ simple, but limited to cases where output grid can capture focus.	
+			\item Wavefiled aligned $\rightarrow $ time consuming but no limit on tilt angle.
+			\end{itemize}
+			\column{30mm}
+			\begin{figure}
+				\vspace*{-1cm}\hspace*{-1.25cm}\includegraphics[width=50mm]{tilted_zp_grids}
+				\caption{Tilt schematic}
+			\end{figure}
+		\end{columns}
+	\end{block}
+\end{frame}
+
+
+
+\begin{frame}{Optic aligned approach}
+	\begin{itemize}
+		\item Apply a phase of $\frac{2\pi}{\lambda} x \tan(\theta)$ at each pixel.
+	\end{itemize}
+	\begin{center}
+		\scalebox{0.65}{
+			\begin{algorithm}[H] 				
+				\SetAlgoLined\DontPrintSemicolon \SetKwFunction{AddPhase}{AddPhase}
+				
+				\SetKwFunction{SliceDiff}{SliceDiff}
+				\SetKwFunction{PropShort}{PropShort}
+				\SetKwFunction{PropLong}{PropLong}
+				
+				\tcc{For each angle in range of interest}	
+				\For{i=1,K}{ 	
+					
+				\tcc{initialize} \AddPhase{$\theta$}\;
+				\tcc{diffraction within optic}
+				\For{n=1,N}{
+					\SliceDiff{n}\;
+					\PropShort{$\pixeldepth$}\;
+				}
+				\tcc{Propagate exit wave by a focal length $f$ to the focal plane}
+				\PropLong{$f$} \;
+				}
+				\SetKwProg{myproc}{Procedure}{}{}
+				\myproc{\AddPhase{$\theta$}}{
+					\tcc{Apply phase to mimic tilt misalignment}	
+					$\psi(x,y) \xleftarrow{} 1$ \;
+					$\pixelphase = \frac{2\pi \pixeldepth}{\lambda}\, \tan(\theta) x$ \;
+					$\psi(x,y) = \psi(x,y) \odot \exp[i \pixelphase]$ \;
+					\KwRet\;}
+				
+				\caption{Optic-aligned approach.}
+			\end{algorithm}
+		}
+	\end{center}
+\end{frame}
+
+
+\begin{frame}{Wavefield aligned approach}
+	\begin{itemize}
+		\item Reduce the size of 2D grid to essential area.
+		\item Duplicate slices along propagation direction to create isotropic grid.
+		\item Rotate zone plate relative to grid.
+		\item Collapse the grid back along the propagation direction.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\begin{block}{}
+		\begin{columns}[totalwidth=1.1\textwidth,c]
+			\column{.6\textwidth}
+			\scalebox{0.6}{
+				\begin{algorithm}[H] 
+					\SetAlgoLined\DontPrintSemicolon
+					
+					\SetKwFunction{Reduce}{Reduce}
+					\SetKwFunction{Rotate}{Rotate}
+					\SetKwFunction{Extract}{Extract}
+					\SetKwFunction{SliceDiff}{SliceDiff}
+					\SetKwFunction{PropTF}{PropTF}
+					\SetKwFunction{PropFT}{PropFT}
+					
+					\tcc{Reduce the pattern down to essential area.}	
+					\Reduce(pattern) \;
+					
+					\tcc{For each angle in range of interest}	
+					\For{i=1,K}{ 	
+						\Rotate(pattern\_reduced)\;
+						\tcc{For each slice in a zone plate at a given tilt misalignment perform multislice simulation}	
+						\For{n=1,N}{ 	
+							\Extract(pattern\_reduced)\;
+							\SliceDiff{n}\;
+							\PropShort{$\Delta z$}\;	
+						}
+						\PropLong{f}\;
+					}
+					\caption{Wavefield-aligned approach.}
+				\end{algorithm}
+			}
+			
+			\column{0.9\textwidth}
+			\scalebox{0.6}{
+				\begin{algorithm}[H]
+					\SetKwProg{myproc}{Procedure}{}{}
+					\myproc{\Reduce(pattern)}{
+						\tcc{Extract relevant part of zone plate}
+						\tcc{choose and save appropriate parameters viz. number of slices, step size along propagation direction}
+						pattern $\xrightarrow{}$pattern\_reduced \;
+						\KwRet\;}
+					\SetKwProg{myproc}{Procedure}{}{}
+					
+					\myproc{\Rotate(pattern\_reduced)}{
+						\tcc{Rotate zone plate pattern}	
+						\tcc{Expand the number of slices along direction of propagation to form an isotropic three dimensional grid.}
+						pattern\_reduced $\xrightarrow{\text{Expand}}$ pattern\_isometric\;
+						\tcc{Rrotate along axis of rotation}
+						pattern\_isometric $\xrightarrow{\text{Rotation}}$ pattern\_isometric\;
+						\tcc{reduce number of slices to number of slices for propagation.}
+						pattern\_isometric $\xrightarrow{\text{Collapse}}$ pattern\_reduced\;
+						\KwRet\;}
+					
+					\myproc{\Extract(pattern\_reduced)}{
+						\tcc{Extract zone plate pattern at slice, expand back to grid size neede for propagation.}
+						pattern\_reduced $\xrightarrow{}$pattern \;
+						\KwRet\;}
+				\end{algorithm}
+			}
+		\end{columns}
+	\end{block}
+\end{frame}
+
+\subsection{Parameters}
+\begin{frame}
+	\begin{center}
+	\scalebox{0.65}{
+		\begin{tabular}{p{5.5cm} r r}
+			\toprule
+			\diagbox{Parameter}{Regime} & Soft X ray & Hard X ray \\
+			\midrule
+			
+			Photon energy & 0.5 keV & 10 keV \\ 
+			\midrule
+			
+			Outermost zone width $\drn$ & 21.09 nm & 21.07 nm \\ 
+			\midrule
+			
+			Diameter $2\rn$ & 58.90 \micron{} & 58.88 \micron{} \\ 
+			\midrule
+			
+			Pixels $\npix$ & 55,296 & 55,296 \\ 
+			\midrule
+			
+			Input array pixel size $\pixelsize$ & 4.73 nm & 4.73 nm \\
+			\midrule
+			
+			Output array pixel size $\pixelsizeout$ & 4.73 nm & 4.74 nm \\ \midrule
+			
+			Focal length $f$ & 0.5 mm & 10 mm \\ \midrule
+			
+			Numerical aperture $\NA$ & 3.372\degree{} & 0.168\degree{} \\ \midrule
+			
+						
+			Bragg tilt angle\footnotemark  $\thetabragg(\rn)$
+			& 1.687\degree{} & 0.084\degree{} \\ \midrule
+			
+			Aberration tilt limit $\thetaellapproxl$ &
+			0.548\degree{} & 1.191\degree{} \\ \midrule
+			
+			
+			Max tilt $\thetafield$ for optic-alig. approach& 10.90\degree{} & 0.75\degree{} \\ \midrule
+			
+			Optimum thickness $\tzpopt$
+			& 0.098 \micron{}
+			& 1.975 \micron{} \\ \midrule
+			
+			$\tzp$ for $\qkleincook=0.333$ & 0.038 \micron{} & 0.759 \micron{} \\
+			\midrule
+			
+			$\tzp$ for $\qkleincook=3.333$ & 0.381 \micron{}  & 7.594 \micron{} \\
+			\midrule
+			
+			$\tzp$ for $\qkleincook=10$ & 1.142 \micron{} & 22.782 \micron{} \\ 
+			
+			\bottomrule 
+			
+			\end{tabular}
+		}
+		\end{center}
+	
+	\footnotetext{For outermost zones}
+\end{frame}
+
+
+
+\section{Results}
+\subsection{Soft x-ray}
+\begin{frame}{Qualitative performance}
+	\begin{itemize}
+		\item Coma predicted.
+		\begin{center}
+			\begin{figure}
+				\includegraphics[scale=0.29]{foc_spot_half}
+				\caption{Focal Profile}
+			\end{figure}
+		\end{center}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Quantitative performance}
+		\begin{center}
+			\begin{figure}
+				\includegraphics[scale=0.4]{tilt_plot_half}
+				\caption{Partial fil}	
+			\end{figure}
+		\end{center}
+\end{frame}
+
+\subsection{Hard x-ray}
+\begin{frame}{Qualitative performance}
+	\begin{itemize}
+		\item Astigmatism predicted.
+		\begin{center}
+			\begin{figure}
+				\includegraphics[scale=0.29]{foc_spot_ten}
+				\caption{Focal Profile}	
+			\end{figure}
+		\end{center}
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Quantitative performance}
+		\begin{center}
+			\begin{figure}
+				\includegraphics[scale=0.4]{tilt_plot_ten}
+				\caption{Partial fil}	
+			\end{figure}
+		\end{center}
+\end{frame}
+
+
+
+\begin{frame}{Summary}
+	\begin{itemize}
+		\item Systematic study of tilt misalignment conducted.
+		\item Simple analytic models can predict misalignment limits and behavior for thin zone plates.
+		\item Waveguide effects are important for thick zone plates.
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Acknowledgements}
+  \begin{itemize}
+  \item \alert{Kenan Li} SLAC
+  \item \alert{Michael Wojcik} APS,ANL.
+  \item \alert{NIMH} U01 MH109100
+  \end{itemize}
+\end{frame}
+
+
+%\end{comment}
+
+% All of the following is optional and typically not needed. 
+%\appendix
+\renewcommand*{\bibfont}{\scriptsize}
+\begin{frame}[t, allowframebreaks]
+\frametitle{References}
+\bibliographystyle{dinat-etal}
+\bibliography{xsd_coffee_talk}
 \end{frame}
 
 
