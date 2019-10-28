@@ -17,10 +17,17 @@
 
 %bibliography
 \usepackage[square,sort]{natbib}
+
 %math
 \usepackage{amsmath}
+\usepackage{nicefrac}
+
 %algorithm
-\usepackage[boxruled,algoruled]{algorithm2e}
+\usepackage[algoruled]{algorithm2e}
+%blue comments in algo.
+\newcommand\mycommfont[1]{\footnotesize\ttfamily\textcolor{blue}{#1}}
+\SetCommentSty{mycommfont}
+
 %caption package for better behavior
 \usepackage[skip=2pt]{caption}
 \captionsetup{font={color=blue,scriptsize}}
@@ -167,7 +174,7 @@
 \end{frame}
 
 \begin{frame}{Outline}
-  \tableofcontents
+  \tableofcontents[hideallsubsections]
   % You might wish to add the option [pausesections]
 \end{frame}
 
@@ -175,7 +182,7 @@
 % and table of contents.
 
 \section{Introduction}
-
+\subsection{Background}
 \begin{frame}{Focusing X-Rays}
 	\begin{block}{}
 		\begin{columns}[onlytextwidth,T]
@@ -183,7 +190,7 @@
 			\begin{itemize}
 			\item Ref. index$\rightarrow$ complex,slightly $<$ 1
 			\item Zone plates$\rightarrow$ monochromatic diffractive optics.
-			\item Alternate rings of low/high ref. index materials placed such that the outgoing waves constructively interfere with each other at the focal spot.
+			\item Alternate rings of low/high ref. index materials placed such that  outgoing waves interfere constructively.			
 			\end{itemize}
 			\column{30mm}
 			\begin{figure}
@@ -201,17 +208,27 @@
 		\begin{columns}[onlytextwidth,T]
 			\column{\dimexpr\linewidth-30mm-10mm}
 			\begin{itemize}
-				\item Spatial resolution limited to finest, outermost zone width.
-				\item Zones must be thick enough along beam direction to produce a phase shift of $\pi$, several um at hard x-ray energy.
+				\item Spatial resolution limited to finest, outermost zone width.\footnotemark
+				\item Zones must be thick enough along beam direction to produce a phase shift of $\pi$, several um at hard x-ray energy.\footnotemark
+				%\item $\tzpopt \simeq \frac{\lambda}{2\delta}\left(1-\frac{2\beta}{\pi
+				%	\delta}\right)$
 			\end{itemize}
 			\column{30mm}
 			\begin{figure}
 				\hspace*{-1.1cm}\includegraphics[width=50mm]{zp_chris}
-				\caption{Thickness vs efficiency \footnotemark}
+				\caption{Efficiency \& resolution for first order focus\footnotemark}
 			\end{figure}
 		\end{columns}
-	\footnotetext{\cite{jacobsen_2019}}
-	\end{block}
+		\end{block}
+		\addtocounter{footnote}{-2}
+			\footnotetext{\cite{myers_ajp_1951,baez_josa_1952}}
+		\stepcounter{footnote}\stepcounter{footnote}
+		
+		\addtocounter{footnote}{-1}
+			\footnotetext{\cite{kirz_josa_1974}}
+		\stepcounter{footnote}
+		
+		\footnotetext{\cite{jacobsen_2019}}
 \end{frame}
 
 \begin{frame}{Scalar theory is not enough}
@@ -234,62 +251,70 @@
 	\end{block}
 \end{frame}
 
-
-\begin{frame}{Motivation for tilt misalignment study}
+\subsection{Motivation}
+\begin{frame}{Need for tilt misalignment study \footnotemark 	\footnotetext{Tilting zones to local bragg angle is not considered here. }}
 	\begin{itemize}
-		\item As Aspect ratios of zone plates go up\footnotemark \footnotetext{\cite{chang_natcomm_2014,parfeniukas_spie_2017,li_jvstb_2017}}, tilt misalignment needs to be understood better.
-		\item Analytic limits\footnotemark \footnotetext{\cite{myers_ajp_1951,young_josa_1972}} from literature do not account for volume diffraction effects.
-		\item Local bragg angle for each zone $\rightarrow$ not the focus here.
+		\item As aspect ratios of zone plates go up\footnotemark \footnotetext{\cite{chang_natcomm_2014,parfeniukas_spie_2017,li_jvstb_2017}} , degredation of performance due to tilt misalignment becomes more prominent.
+		\item Analytic limits\footnotemark 	\footnotetext{\cite{myers_ajp_1951,young_josa_1972}} from literature do not account for volume diffraction effects.
 	\end{itemize}
+
 \end{frame}
 
 
 \section{Analytic limits}
-
 \begin{frame}{Analytic limits}
 	\begin{block}{}
 		\begin{columns}[onlytextwidth,T]
 			\column{\dimexpr\linewidth-30mm-10mm}
 			\begin{itemize}
-				\item Derived by using path difference between (upper) marginal, axial ray \footnotemark
-					
-
+				\item Based on path length deviation (from no tilt) between marginal, axial ray\footnotemark $\rightarrow$ $\ellexactu,\ellexactl$.
+				\item Simplified expressions for path length deviation 
+			   \begin{itemize}
+					\item $\ellapproxu = (\ellapprox0) + \ellapproxc \theta-\ellapproxa
+					\theta^{2}$
+					\item $\ellapproxl = (\ellapprox0) + \ellapproxc \theta+\ellapproxa
+					\theta^{2}$
+				\end{itemize}
+			\item $\ellapprox0$ $\rightarrow$ convergence to focus, $\ellapproxc$ $\rightarrow$ coma, $\ellapproxa$ $\rightarrow$
+			astigmatism \& field curvature\footnotemark.
 			\end{itemize}
 			\column{30mm}
 			\begin{figure}
 				\hspace*{-1cm}\includegraphics[width=50mm]{zp_schematic}
-				\caption{Volume effects in 1d gratings}
+				\caption{Path length schematic.}
 			\end{figure}
 		\end{columns}
-	%\addtocounter{footnote}{-1}
-	%	\footnotetext{\cite{young_josa_1972}}
-	%\stepcounter{footnote}
-	\footnotetext{\cite{myers_ajp_1951,young_josa_1972}}
-
+	\addtocounter{footnote}{-1}
+		\footnotetext{\cite{myers_ajp_1951,young_josa_1972}}
+	\stepcounter{footnote}
+	\footnotetext{referred to hereafter as astigmatism only.}
 	\end{block}
 \end{frame}
 
 
 \begin{frame}{Expected behavior}
 	\begin{itemize}
-		\item coma at soft xray, astigmatism at hard xray.
+		\item $\nicefrac{\ellapproxa \theta^{2}}{\ellapproxc\theta} \propto\nicefrac{\theta}{\scriptsize{N.A.}}$
+		\item RQW limit\footnotemark : $\thetaellc < \frac{1}{2N\,\scriptsize{N.A.}}$ $|$ $\thetaella < \frac{1}{\sqrt{3N}}$
 		\begin{center}
 			\begin{figure}
-				\includegraphics[scale=0.3]{path_length_terms}
+				\includegraphics[scale=0.35]{path_length_terms}
 				\caption{Path length terms}	
 			\end{figure}
 		\end{center}
 	\end{itemize}
+	\footnotetext{Rayleigh Quarter Wave Criterion}
 \end{frame}
 
 
 \section{Implementation}
+\subsection{Creating zone plates}
 \begin{frame}{Partial Filling}
 	\begin{itemize}
-		\item No binary filling.
+		\item Binary fill on a smaller pixel grid, then downsample!
 		\begin{center}
 			\begin{figure}
-				\includegraphics[scale=0.3]{partial_fill}
+				\includegraphics[scale=0.35]{partial_fill}
 				\caption{Partial fil}	
 			\end{figure}
 		\end{center}
@@ -297,9 +322,12 @@
 \end{frame}
 
 
-\begin{frame}{Multislice }
-	\begin{onlyenv}<1>
-		
+\subsection{Multislice}
+\begin{frame}{Multislice}
+		\begin{itemize}
+			\item "Slice" the object into multiple thin sections\footnotemark.
+			\item Agrees with rigorous coupled wave theory\footnotemark.
+		\end{itemize}
 		\begin{columns}[onlytextwidth,T]
 		\column{\dimexpr\linewidth-20mm-10mm}
 		\scalebox{0.65}{
@@ -329,62 +357,107 @@
 				\caption{Multi-slice schematic \footnotemark }
 			\end{figure}
 		\end{columns}
-
-		\footnotetext{\cite{jacobsen_2019}}
-		
-		
-		
-	\end{onlyenv}
 	
-	\begin{onlyenv}<2>
-		\scalebox{0.65}{
-			\begin{algorithm}[H]
-				%This is to hide Begin keyword
-				\SetKwProg{myproc}{Procedure}{}{}
-				\myproc{\SliceDiff{n}}{
-					\tcc{Apply refractive effect of slice using }	
-					$\psi(x,y) = \psi(x,y) \odot \exp\Bigl[i\, \frac{2\pi \pixeldepth}{\lambda} \bigl(\delta(x,y)+i\beta(x,y)\bigr)\Bigr]$ \;
-					\KwRet\;}
-				
-				\SetKwProg{myproc}{Procedure}{}{}
-				\myproc{\PropShort{$\pixeldepth$}}{
-					\tcc{Free space propagation from source $s$ to destination $d$ plane}	
-					$\psi_{s}(x,y) \xrightarrow{\mathcal{F}}\Psi(u,v)$\;
-					$\Psi(u,v) = \Psi(u,v) \odot \exp\Bigl[-i\, \frac{2\pi \pixeldepth}{\lambda} \sqrt{1-\lambda^{2}(u^{2}+v^{2})}\Bigr]$\;
-					$\Psi(u,v) \xrightarrow{\mathcal{F}^{-1}}\psi_d(x,y)$\;
-					\KwRet\;}
-				
-				\SetKwProg{myproc}{Procedure}{}{}
-				\myproc{\PropLong{$f$}}{
-					\tcc{Free space propagation from source $s$ to destination $d$ plane}	
-					$\psi^{\prime}(x,y) = \psi_{s}(x,y) \odot \exp\Bigl[-i\,\frac{2\pi f}{\lambda}  \sqrt{x_{s}^{2}+x_{s}^{2}+f^{2}}\Bigr]$\;
-					$\psi^{\prime}(x,y) \xrightarrow{\mathcal{F}} \Psi^{\prime}(x,y)$\;
-					$\Psi_{d}(x,y) = \Psi^{\prime}(x,y) \odot \exp\Bigl[-i\,\frac{2\pi f}{\lambda} \sqrt{x_{d}^{2}+x_{d}^{2}+f^{2}}\Bigr]$\;
-					$\psi_{d}(x,y) = \frac{i\pixelsize^2}{\lambda f} \Psi_{d}(x,y)$\;
-					\KwRet\;}
-				%				\caption{Optic simulation using the multislice method.}
-			\end{algorithm}
-		}
-	\end{onlyenv}
+		\addtocounter{footnote}{-2}
+			\footnotetext{\cite{cowley_actacryst_1957}, \cite{ishizuka_aca_1977}, also known as beam prop. meth. \cite{vanroey_josa_1981}}
+		\stepcounter{footnote}\stepcounter{footnote}
+		\addtocounter{footnote}{-1}
+			\footnotetext{\cite{li_optexp_2017}}
+		\stepcounter{footnote}
+		\footnotetext{\cite{jacobsen_2019}}
 \end{frame}
 
+\begin{frame}
+	\scalebox{0.7}{
+		\begin{algorithm}[H]
+			%This is to hide Begin keyword
+			\SetKwProg{myproc}{Procedure}{}{}
+			\myproc{\SliceDiff{n}}{
+				\tcc{Apply refractive effect of slice using }	
+				$\psi(x,y) = \psi(x,y) \odot \exp\Bigl[i\, \frac{2\pi \pixeldepth}{\lambda} \bigl(\delta(x,y)+i\beta(x,y)\bigr)\Bigr]$ \;
+				\KwRet\;}
+			
+			\SetKwProg{myproc}{Procedure}{}{}
+			\myproc{\PropShort{$\pixeldepth$}}{
+				\tcc{Free space propagation from source $s$ to destination $d$ plane}	
+				$\psi_{s}(x,y) \xrightarrow{\mathcal{F}}\Psi(u,v)$\;
+				$\Psi(u,v) = \Psi(u,v) \odot \exp\Bigl[-i\, \frac{2\pi \pixeldepth}{\lambda} \sqrt{1-\lambda^{2}(u^{2}+v^{2})}\Bigr]$\;
+				$\Psi(u,v) \xrightarrow{\mathcal{F}^{-1}}\psi_d(x,y)$\;
+				\KwRet\;}
+			
+			\SetKwProg{myproc}{Procedure}{}{}
+			\myproc{\PropLong{$f$}}{
+				\tcc{Free space propagation from source $s$ to destination $d$ plane}	
+				$\psi^{\prime}(x,y) = \psi_{s}(x,y) \odot \exp\Bigl[-i\,\frac{2\pi f}{\lambda}  \sqrt{x_{s}^{2}+x_{s}^{2}+f^{2}}\Bigr]$\;
+				$\psi^{\prime}(x,y) \xrightarrow{\mathcal{F}} \Psi^{\prime}(x,y)$\;
+				$\Psi_{d}(x,y) = \Psi^{\prime}(x,y) \odot \exp\Bigl[-i\,\frac{2\pi f}{\lambda} \sqrt{x_{d}^{2}+x_{d}^{2}+f^{2}}\Bigr]$\;
+				$\psi_{d}(x,y) = \frac{i\pixelsize^2}{\lambda f} \Psi_{d}(x,y)$\;
+				\KwRet\;}
+			%				\caption{Optic simulation using the multislice method.}
+		\end{algorithm}
+	}
+	
+\end{frame}
 
-\begin{frame}{Approaches}
+\subsection{Simulating tilt misalignment}
+\begin{frame}{Approaches to simulating tilt misalignment}
 	\begin{block}{}
 		\begin{columns}[onlytextwidth,T]
 			\column{\dimexpr\linewidth-30mm-10mm}
 			\begin{itemize}
-				\item Two approaches.
+				\item Two methods to simulating tilt.
+				\begin{itemize}
+					\item Optic aligned.
+					\item Wavefiled aligned.
+				\end{itemize}
+			\item Optic aligned $\rightarrow$ simple, but limited to cases where output grid can capture focus.	
+			\item Wavefiled aligned $\rightarrow $ time consuming but no limit on tilt angle.
 			\end{itemize}
 			\column{30mm}
 			\begin{figure}
-				\hspace*{-1cm}\includegraphics[width=50mm]{tilted_zp_grids}
-				\caption{Approaches}
+				\vspace*{-1cm}\hspace*{-1.25cm}\includegraphics[width=50mm]{tilted_zp_grids}
+				\caption{Tilt schematic}
 			\end{figure}
 		\end{columns}
 	\end{block}
 \end{frame}
 
+
+\begin{frame}{Optic aligned approach}
+
+
+\end{frame}
+
+\begin{frame}{Optic aligned approach}
+		\scalebox{0.65}{
+			\begin{algorithm}[H] 				
+				\SetAlgoLined\DontPrintSemicolon \SetKwFunction{AddPhase}{AddPhase}
+				
+				\SetKwFunction{SliceDiff}{SliceDiff}
+				\SetKwFunction{PropShort}{PropShort}
+				\SetKwFunction{PropLong}{PropLong}
+				
+				
+				\tcc{initialize} \AddPhase{$\theta$}\;
+				\tcc{diffraction within optic}
+				\For{n=1,N}{
+					\SliceDiff{n}\;
+					\PropShort{$\pixeldepth$}\;
+				}
+				\tcc{Propagate exit wave by a focal length $f$ to the focal plane}
+				\PropLong{$f$} \;
+				
+				\SetKwProg{myproc}{Procedure}{}{}
+				\myproc{\AddPhase{$\theta$}}{
+					\tcc{Apply phase to mimic tilt misalignment}	
+					$\psi(x,y) \xleftarrow{} 1$ \;
+					$\pixelphase = \frac{2\pi \pixeldepth}{\lambda}\, \tan(\theta) x$ \;
+					$\psi(x,y) = \psi(x,y) \odot \exp[i \pixelphase]$ \;
+					\KwRet\;}
+				\caption{Algorithm for the optic-aligned approach.}
+			\end{algorithm}
+		}
+\end{frame}
 
 \section{Results}
 \begin{frame}{soft x-ray}
@@ -449,6 +522,7 @@
   \end{itemize}
 \end{frame}
 
+
 %\end{comment}
 
 % All of the following is optional and typically not needed. 
@@ -459,6 +533,70 @@
 \bibliographystyle{dinat-etal}
 \bibliography{xsd_coffee_talk}
 \end{frame}
+
+
+\section{Backup}
+
+
+\begin{frame}
+	\begin{block}{}
+		\begin{columns}[totalwidth=1.1\textwidth,c]
+			\column{.6\textwidth}
+			\scalebox{0.7}{
+				\begin{algorithm}[H] 
+					% This is to hide end and get the last vertical line straight
+					\SetAlgoLined\DontPrintSemicolon
+					
+					\SetKwFunction{SliceDiff}{SliceDiff}
+					\SetKwFunction{PropShort}{PropShort}
+					\SetKwFunction{PropLong}{PropLong}
+					
+					\tcc{initialize}
+					$\psi(x,y) \xleftarrow{} 1$\;
+					\tcc{diffraction within optic}
+					\For{n=1,N}{ 	
+						\SliceDiff{n}\;
+						\PropShort{$\pixeldepth$}\;
+					}
+					\tcc{Propagate exit wave by a focal length $f$ to the focal plane}
+					\PropLong{$f$} \;
+					\caption{Optic simulation using the multislice method.}
+				\end{algorithm}
+			}
+			
+			\column{0.9\textwidth}
+			\scalebox{0.6}{
+				\begin{algorithm}[H]
+					%This is to hide Begin keyword
+					\SetKwProg{myproc}{Procedure}{}{}
+					\myproc{\SliceDiff{n}}{
+						\tcc{Apply refractive effect of slice using }	
+						$\psi(x,y) = \psi(x,y) \odot \exp\Bigl[i\, \frac{2\pi \pixeldepth}{\lambda} \bigl(\delta(x,y)+i\beta(x,y)\bigr)\Bigr]$ \;
+						\KwRet\;}
+					
+					\SetKwProg{myproc}{Procedure}{}{}
+					\myproc{\PropShort{$\pixeldepth$}}{
+						\tcc{Free space propagation from source $s$ to destination $d$ plane}	
+						$\psi_{s}(x,y) \xrightarrow{\mathcal{F}}\Psi(u,v)$\;
+						$\Psi(u,v) = \Psi(u,v) \odot \exp\Bigl[-i\, \frac{2\pi \pixeldepth}{\lambda} \sqrt{1-\lambda^{2}(u^{2}+v^{2})}\Bigr]$\;
+						$\Psi(u,v) \xrightarrow{\mathcal{F}^{-1}}\psi_d(x,y)$\;
+						\KwRet\;}
+					
+					\SetKwProg{myproc}{Procedure}{}{}
+					\myproc{\PropLong{$f$}}{
+						\tcc{Free space propagation from source $s$ to destination $d$ plane}	
+						$\psi^{\prime}(x,y) = \psi_{s}(x,y) \odot \exp\Bigl[-i\,\frac{2\pi f}{\lambda}  \sqrt{x_{s}^{2}+x_{s}^{2}+f^{2}}\Bigr]$\;
+						$\psi^{\prime}(x,y) \xrightarrow{\mathcal{F}} \Psi^{\prime}(x,y)$\;
+						$\Psi_{d}(x,y) = \Psi^{\prime}(x,y) \odot \exp\Bigl[-i\,\frac{2\pi f}{\lambda} \sqrt{x_{d}^{2}+x_{d}^{2}+f^{2}}\Bigr]$\;
+						$\psi_{d}(x,y) = \frac{i\pixelsize^2}{\lambda f} \Psi_{d}(x,y)$\;
+						\KwRet\;}
+					%				\caption{Optic simulation using the multislice method.}
+				\end{algorithm}
+			}
+		\end{columns}
+	\end{block}
+\end{frame}
+
 
 \end{document}
 
