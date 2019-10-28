@@ -254,7 +254,7 @@
 			\end{itemize}
 			\column{30mm}
 			\begin{figure}
-				\hspace*{-0.75cm}\includegraphics[width=45mm]{grating}
+				\vspace*{-0.75cm}\hspace*{-0.75cm}\includegraphics[width=45mm]{grating}
 				\caption{Volume effects in 1d gratings}
 			\end{figure}
 		\end{columns}
@@ -306,8 +306,8 @@
 
 \begin{frame}{Expected behavior}
 	\begin{itemize}
-		\item $\frac{\ellapproxa \theta^{2}}{\ellapproxc\theta} \propto\frac{\theta}{\scriptsize{N.A.}}$
-		\item RQW limit\footnotemark : $\thetaellc < \frac{1}{2N\,\scriptsize{N.A.}}$ $|$ $\thetaella < \frac{1}{\sqrt{3N}}$
+		\item $\frac{\ellapproxa \theta^{2}}{\ellapproxc\theta} \propto\frac{\theta}{\scriptsize{N.A.}}$, $\scriptsize{N.A.}$ $\rightarrow$ numerical aperture.
+		\item RQW limit\footnotemark : $\thetaellc < \frac{1}{2N\,\scriptsize{N.A.}}$ $|$ $\thetaella < \frac{1}{\sqrt{3N}}$, $N$ $\rightarrow$ number of zones.
 		\begin{center}
 			\begin{figure}
 				\includegraphics[scale=0.35]{path_length_terms}
@@ -327,7 +327,7 @@
 		\begin{center}
 			\begin{figure}
 				\includegraphics[scale=0.35]{partial_fill}
-				\caption{Partial fil}	
+				\caption{Partial fill}	
 			\end{figure}
 		\end{center}
 	\end{itemize}
@@ -620,20 +620,19 @@
 \begin{frame}{Qualitative performance}
 	\begin{itemize}
 		\item Coma predicted.
+	\end{itemize}
 		\begin{center}
 			\begin{figure}
 				\includegraphics[scale=0.29]{foc_spot_half}
 				\caption{Focal Profile}
 			\end{figure}
 		\end{center}
-	\end{itemize}
 \end{frame}
 
 \begin{frame}{Quantitative performance}
 		\begin{center}
 			\begin{figure}
 				\includegraphics[scale=0.4]{tilt_plot_half}
-				\caption{Partial fil}	
 			\end{figure}
 		\end{center}
 \end{frame}
@@ -642,13 +641,14 @@
 \begin{frame}{Qualitative performance}
 	\begin{itemize}
 		\item Astigmatism predicted.
+	\end{itemize}
 		\begin{center}
 			\begin{figure}
 				\includegraphics[scale=0.29]{foc_spot_ten}
 				\caption{Focal Profile}	
 			\end{figure}
 		\end{center}
-	\end{itemize}
+
 \end{frame}
 
 
@@ -656,11 +656,9 @@
 		\begin{center}
 			\begin{figure}
 				\includegraphics[scale=0.4]{tilt_plot_ten}
-				\caption{Partial fil}	
 			\end{figure}
 		\end{center}
 \end{frame}
-
 
 
 \begin{frame}{Summary}
@@ -692,6 +690,22 @@
 \bibliography{xsd_coffee_talk}
 \end{frame}
 
+
+\section{Backup}
+\begin{frame}{Programming details}
+	\begin{itemize}
+		\item Implemented in Python3 using the scientific python stack : NumPy,SciPy
+		\item FFT's via pyFFTW
+		\item numexpr for pointwise multiplication
+		\item libvips for 3D rotations
+		\item HDF5 for I/O
+	\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Waveguide effects at no tilt}
+	\includegraphics[scale=0.3]{foc_profiles}
+\end{frame}
 
 \end{document}
 
