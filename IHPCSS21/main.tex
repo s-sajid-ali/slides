@@ -235,7 +235,7 @@
 \subsection{3D solver}
 \begin{frame}{Research choices}
 	\begin{itemize}
-		\item Profiling showed some improvement post enhancements but strong and weak scaling efficieny falls off beyond 4 nodes for a single 2D slice solve. 
+		\item Strong and weak scaling efficieny falls off beyond 4 nodes for a single 2D slice solve. 
 		\item Reason being the naive data distribution leading to load balancing issues, $\approx80$ of time being spent in matrix-vector and transposed matrix-vector multiplications. 
 		\item However, experimental data is always a 3D data-set! Focus on throughput instead of scalability of a single 2D slice solve. 
 		\item Introduced MPI-subcommunicator based 2-level MPI parallelism, with multiple concurrent instances of the solver.
@@ -245,8 +245,8 @@
 \begin{frame}{2 level MPI parallelism}
 	\begin{center}
 		\begin{figure}
-			\hspace*{-1cm}\includegraphics[scale=0.3125]{figures/2level.png}
-			\caption{(Left) Architecture of the 2-level parallelism. Each solver instance solves for a "batch" of 2D slices (Right) Idea on accelerating convergence of 3D solver by combining results of 2D solves. To combine the shifts from subcomms, run multiple "overall sweeps" with checkpoint-restart. }
+			\hspace*{-1cm}\includegraphics[scale=0.3125]{figures/2level1.png}
+			\caption{Architecture of the 2-level parallelism. Each solver instance solves for a "batch" of 2D slices}
 		\end{figure}
 	\end{center}
 \end{frame}
@@ -336,7 +336,7 @@
 		\item \alert{Alp Dener}, TAO-developer, MCS/ANL
 		\item \alert{Hong Zhang/Barry Smith}, GPU hackaton mentors/PETSc developers, MCS/ANL
 		\item \alert{PETSc developers} on the mailing lists
-		\item \alert{bebop-LCRC} ANL \& \alert{theta-GPU} ALCF for resources
+		\item \alert{bebop-LCRC} ANL resources
 		\item \alert{NIMH} \& \alert{ANL-MCS} for funding
 	\end{itemize}
 \end{frame}

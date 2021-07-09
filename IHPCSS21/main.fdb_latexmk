@@ -1,12 +1,12 @@
 # Fdb version 3
-["bibtex main"] 1625861810 "main.aux" "main.bbl" "main" 1625862969
+["bibtex main"] 1625861810 "main.aux" "main.bbl" "main" 1625865198
   "./dinat-etal.bst" 1609707455 44519 329e8e04dba7fbfacb57523e6eabc78c ""
-  "main.aux" 1625862968 6237 bbcd2222780b4da5697fd3b7d4c5a52f "lualatex"
+  "main.aux" 1625865197 6237 bbcd2222780b4da5697fd3b7d4c5a52f "lualatex"
   "pirt.bib" 1620661109 12030 efd390c5f41b31a6f9a5f1db76137aa6 ""
   (generated)
-  "main.blg"
   "main.bbl"
-["lualatex"] 1625862958 "main.tex" "main.pdf" "main" 1625862969
+  "main.blg"
+["lualatex"] 1625865185 "main.tex" "main.pdf" "main" 1625865198
   "C:/Users/sajid/AppData/Local/MiKTeX/luatex-cache/generic/fonts/otl/lmmono8-regular.luc" 1612307370 77287 a53d0cf658fb3ad5fdf3fd6733816431 ""
   "C:/Users/sajid/AppData/Local/MiKTeX/luatex-cache/generic/fonts/otl/lmroman10-regular.luc" 1611948416 123174 76e25fa582fcad16fcf043cf67011419 ""
   "C:/Users/sajid/AppData/Local/MiKTeX/luatex-cache/generic/fonts/otl/lmromancaps10-regular.luc" 1612307239 116106 8bc7c596f9944b90c3ee5366fe6fe036 ""
@@ -262,7 +262,7 @@
   "C:/Users/sajid/AppData/Local/Programs/MiKTeX/tex/luatex/luaotfload/luaotfload-tounicode.lua" 1599067456 7563 24601f0255c35508eddbb427a6e18873 ""
   "C:/Users/sajid/AppData/Local/Programs/MiKTeX/tex/luatex/luaotfload/luaotfload-unicode.lua" 1599067456 3061 c7d3f282db7a0f9588cc57d8f079a3cb ""
   "figures/2d_dist_cropped.pdf" 1620498987 67809 6359d30817a292ad4655fc95912e94a5 ""
-  "figures/2level.png" 1620499503 251311 21d0d893eba5dba9846ed7c0ab4d6fa1 ""
+  "figures/2level1.png" 1620499316 88097 2676f03538ec801c4ad35c26ced5a729 ""
   "figures/drifts.png" 1609707455 47631 df5bfec6a0baa8545a84ab7c3d933ca9 ""
   "figures/drifts_mag_tie.pdf" 1611770920 78231 72a6ba29e937d4bcae8210392d8583f2 ""
   "figures/ppa_combined.png" 1609707455 307722 9a3ae1be1b4105113c397986f3a7b09a ""
@@ -270,17 +270,17 @@
   "figures/strong_scaling.pdf" 1612311685 12124 68688d3cdcec973ebd9987e1eff71ad2 ""
   "figures/throughput.pdf" 1620662082 17821 b2aaf7b608bdc60b7064cf6e0f085408 ""
   "figures/weak_scaling.pdf" 1612563228 15609 589ae1e0662ad49cf3100953ffc8a9dd ""
-  "main.aux" 1625862968 6237 bbcd2222780b4da5697fd3b7d4c5a52f "lualatex"
+  "main.aux" 1625865197 6237 bbcd2222780b4da5697fd3b7d4c5a52f "lualatex"
   "main.bbl" 1625861810 5042 4d91cfdc34a0809014e834147c0ee5d6 "bibtex main"
-  "main.nav" 1625862968 3008 c746430634bf1cf248a346fc5f213be2 "lualatex"
-  "main.out" 1625862968 476 d166abf8f12e3dd43b880a32061c9e38 "lualatex"
-  "main.tex" 1625862957 14396 b1a0382fd2a156a6381edaf3aea26ab8 ""
-  "main.toc" 1625862968 176 528e0a37b04973d86124b932691b8b14 "lualatex"
+  "main.nav" 1625865197 3008 c746430634bf1cf248a346fc5f213be2 "lualatex"
+  "main.out" 1625865197 476 d166abf8f12e3dd43b880a32061c9e38 "lualatex"
+  "main.tex" 1625865184 14122 debb418abb67f6208e4dc90f1f4eeb9b ""
+  "main.toc" 1625865197 176 528e0a37b04973d86124b932691b8b14 "lualatex"
   (generated)
   "main.snm"
   "main.aux"
   "main.out"
   "main.toc"
-  "main.pdf"
   "main.log"
   "main.nav"
+  "main.pdf"
